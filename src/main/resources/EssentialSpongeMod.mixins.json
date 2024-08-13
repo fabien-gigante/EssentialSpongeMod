@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "com.fabien_gigante.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"IronGolemEntityMixin",
+		"PointedDripstoneBlockMixin",
+		"SpongeBlockMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
