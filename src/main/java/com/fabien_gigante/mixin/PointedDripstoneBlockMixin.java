@@ -21,22 +21,22 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(PointedDripstoneBlock.class)
 public class PointedDripstoneBlockMixin {
 
-    @Redirect(method = "method_33279", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z"))
-    private static boolean canDryBlock_getFluid(BlockState blockState, Block block) {
-        return blockState.isOf(Blocks.MUD) || blockState.isOf(Blocks.WET_SPONGE);
-    }
-    @Redirect(method = "dripTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z"))
-    private static boolean canDryBlock_dripTick(BlockState blockState, Block block) {
-        return blockState.isOf(Blocks.MUD) || blockState.isOf(Blocks.WET_SPONGE);
-    }
+	@Redirect(method = "method_33279", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z"))
+	private static boolean canDryBlock_getFluid(BlockState blockState, Block block) {
+		return blockState.isOf(Blocks.MUD) || blockState.isOf(Blocks.WET_SPONGE);
+	}
+	@Redirect(method = "dripTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z"))
+	private static boolean canDryBlock_dripTick(BlockState blockState, Block block) {
+		return blockState.isOf(Blocks.MUD) || blockState.isOf(Blocks.WET_SPONGE);
+	}
 
-    @Redirect(method = "dripTick",at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"))
-    private static boolean dryBlock_preventDefault(ServerWorld world, BlockPos pos, BlockState state) { return false; }
+	@Redirect(method = "dripTick",at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"))
+	private static boolean dryBlock_preventDefault(ServerWorld world, BlockPos pos, BlockState state) { return false; }
 
-    @Inject(method = "dripTick",at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z", shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
-    private static void dryBlock(BlockState state, ServerWorld world, BlockPos pos, float dripChance, CallbackInfo ci , Optional<DrippingFluid> optional) {
-        BlockState sourceState = optional.get().sourceState(); BlockPos sourcePos = optional.get().pos();
-        Block targetBlock = sourceState.isOf(Blocks.WET_SPONGE) ? Blocks.SPONGE : Blocks.CLAY;
-        world.setBlockState(sourcePos, targetBlock.getDefaultState());
-    }
+	@Inject(method = "dripTick",at = @At(value = "INVOKE", target = "Lnet/minecraft/server/world/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z", shift = Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
+	private static void dryBlock(BlockState state, ServerWorld world, BlockPos pos, float dripChance, CallbackInfo ci , Optional<DrippingFluid> optional) {
+		BlockState sourceState = optional.get().sourceState(); BlockPos sourcePos = optional.get().pos();
+		Block targetBlock = sourceState.isOf(Blocks.WET_SPONGE) ? Blocks.SPONGE : Blocks.CLAY;
+		world.setBlockState(sourcePos, targetBlock.getDefaultState());
+	}
 }

@@ -6,8 +6,8 @@
 	"description": "Wet sponges can be dryed using dripstones. Sponges can be wet by crafting or when raining.",
 	"authors": ["Fabien Gigante"],
 	"contact": {
-		"homepage": "https://github.com/fabien-gigante/essential-sponge",
-		"sources": "https://github.com/fabien-gigante/essential-sponge"
+		"homepage": "https://github.com/fabien-gigante/EssentialSpongeMod",
+		"sources": "https://github.com/fabien-gigante/EssentialSpongeMod"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/icon.png",

@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(SpongeBlock.class)
 public abstract class SpongeBlockMixin {
-   private static boolean canBeWet(World world, Biome.Precipitation precipitation) {
-      return precipitation == Precipitation.RAIN && world.getRandom().nextFloat() < 0.05F;
-   }
+	private static boolean canBeWet(World world, Biome.Precipitation precipitation) {
+		return precipitation == Precipitation.RAIN && world.getRandom().nextFloat() < 0.05F;
+	}
 
-   public void precipitationTick(BlockState state, World world, BlockPos pos, Biome.Precipitation precipitation) {
-      if (canBeWet(world, precipitation)) {
-            world.setBlockState(pos, Blocks.WET_SPONGE.getDefaultState());
-            world.emitGameEvent((Entity)null, GameEvent.BLOCK_CHANGE, pos);
-        }
-    }
+	public void precipitationTick(BlockState state, World world, BlockPos pos, Biome.Precipitation precipitation) {
+		if (canBeWet(world, precipitation)) {
+			world.setBlockState(pos, Blocks.WET_SPONGE.getDefaultState());
+			world.emitGameEvent((Entity) null, GameEvent.BLOCK_CHANGE, pos);
+		}
+	}
 }
